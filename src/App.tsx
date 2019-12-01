@@ -3,13 +3,15 @@ import { Provider } from "react-redux";
 
 import TodoList from "./todo/TodoList";
 import store from "./store";
-import "./App.css";
+import "./todo.scss";
 
 const App: React.FC = () => {
   return (
-    <Provider store={store}>
-      <TodoList />
-    </Provider>
+    <article className="App">
+      <Provider store={store}>
+        <TodoList />
+      </Provider>
+    </article>
   );
 };
 

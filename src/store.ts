@@ -1,5 +1,13 @@
-import { createStore } from "redux";
+import { createStore, compose } from 'redux';
 
-import todoReducer from "./todo/reducer";
+import todoReducer from './todo/reducer';
 
-export default createStore(todoReducer);
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
+export default createStore(todoReducer, composeEnhancers());

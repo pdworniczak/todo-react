@@ -1,21 +1,20 @@
-import React from "react";
+import React from 'react';
+import { Button } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
-import Todo from "./components/Todo";
-import { Todo as TodoType } from "./types";
+import Todo from './components/Todo';
+import { todosSelector } from './reducer';
 
-const todos: TodoType[] = [
-  { id: 1, title: "test", description: "description" }
-];
+export default function TodoList() {
+  const todos = useSelector(todosSelector);
 
-const TodoList: React.FC = () => {
   return (
-    <article>
-      <header>TODO List</header>
+    <article className="todo">
+      <header className="todo__header">TODO List</header>
+      <Button size="small">add</Button>
       {todos.map((todo, index) => (
         <Todo key={index} {...todo} />
       ))}
     </article>
   );
-};
-
-export default TodoList;
+}

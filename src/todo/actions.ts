@@ -1,7 +1,7 @@
 import {
   Todo,
-  TODO_ADD,
   TodoActionTypes,
+  TODO_ADD,
   TODO_EDIT,
   TODO_DELETE
 } from "./types";
