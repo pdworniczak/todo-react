@@ -3,7 +3,7 @@ import {
   TodoActionTypes,
   TODO_ADD,
   TODO_EDIT,
-  TODO_DELETE
+  TODO_REMOVE
 } from "./types";
 
 export function addTodo(todo: Todo): TodoActionTypes {
@@ -22,7 +22,7 @@ export function editTodo(todo: Todo): TodoActionTypes {
 
 export function removeTodo(id: number): TodoActionTypes {
   return {
-    type: TODO_DELETE,
+    type: TODO_REMOVE,
     meta: { id }
   };
 }

@@ -15,7 +15,7 @@ export interface TodoState {
 
 export const TODO_ADD = "TODO_ADD";
 export const TODO_EDIT = "TODO_EDIT";
-export const TODO_DELETE = "TODO_DELETE";
+export const TODO_REMOVE = "TODO_REMOVE";
 
 export interface TodoAddAction {
   type: typeof TODO_ADD;
@@ -28,10 +28,16 @@ export interface TodoEditAction {
 }
 
 export interface TodoDeleteAction {
-  type: typeof TODO_DELETE;
+  type: typeof TODO_REMOVE;
   meta: {
     id: number;
   };
 }
 
 export type TodoActionTypes = TodoAddAction | TodoEditAction | TodoDeleteAction;
+
+
+export interface TodoEditorContext {
+  open: boolean;
+  todo?: Todo;
+}

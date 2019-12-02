@@ -1,0 +1,29 @@
+$modal-background: #fff;
+
+.App {
+  display: flex;
+  justify-content: center;
+}
+
+.todo {
+  display: felx;
+  max-width: 800px;
+
+  &__header {
+    margin: 2em;
+  }
+}
+
+.todo-modal {
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__editor {
+    padding: 2em;
+    background: $modal-background;
+    border-radius: 1em;
+  }
+}

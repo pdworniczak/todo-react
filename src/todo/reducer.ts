@@ -1,4 +1,4 @@
-import { Todo, TodoActionTypes, TodoState, TODO_ADD, TODO_EDIT, TODO_DELETE } from './types';
+import { Todo, TodoActionTypes, TodoState, TODO_ADD, TODO_EDIT, TODO_REMOVE } from './types';
 
 const initialState = {
   todos: [{ title: 'redux title', description: 'im inside redux' }] as Todo[],
@@ -14,7 +14,7 @@ export default (state = initialState, action: TodoActionTypes): TodoState => {
       return {
         todos: [...state.todos.filter(todo => todo.id !== action.payload.id), action.payload],
       };
-    case TODO_DELETE:
+    case TODO_REMOVE:
       return {
         todos: state.todos.filter(todo => todo.id !== action.meta.id),
       };
