@@ -1,32 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, TextField, Button } from '@material-ui/core';
-import { TodoEditorContext } from './types';
+import { Modal, TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 
 import './todo.scss';
-import { useDispatch } from 'react-redux';
 import { addTodo, editTodo } from './actions';
+import { TodoEditorContext } from './types';
 
 interface AddEditProps {
   context: TodoEditorContext;
   handleClose: () => void;
 }
 
+const colors = [
+  '#000000',
+  '#C0C0C0',
+  '#808080',
+  '#000080',
+  '#0000FF',
+  '#00FFFF',
+  '#008080',
+  '#800080',
+  '#FF00FF',
+  '#FFFFFF',
+  '#00FF00',
+  '#008000',
+  '#800000',
+  '#FF0000',
+  '#FFA500',
+  '#FFFF00',
+  '#808000',
+];
+
 export default function TodoEditor({ handleClose, context: { open, todo } }: AddEditProps) {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [backgroundColor, setBackgroundColor] = useState<string>('#FFF');
+  const [fontColor, setFontColor] = useState<string>('#000');
   const [titleErrorMessage, setTitleErrorMessage] = useState<string>('');
 
   useEffect(() => {
     setTitle((todo && todo.title) || '');
     setDescription((todo && todo.description) || '');
     setTitleErrorMessage('');
+    setBackgroundColor((todo && todo.bgcolor) || '#FFF');
+    setFontColor((todo && todo.color) || '#000');
   }, [todo]);
 
   const dispatch = useDispatch();
 
   return (
     <Modal className="todo-modal__container" open={open} onClose={handleClose}>
-      <article className="todo-modal__editor">
+      <article
+        className="todo-modal__editor"
+        style={{
+          background: backgroundColor,
+          color: fontColor,
+        }}
+      >
         <header>add/edit todo</header>
         <section>
           <TextField
@@ -36,14 +66,67 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
             onChange={e => setTitle(e.target.value)}
             error={!!titleErrorMessage}
             helperText={titleErrorMessage}
+            inputProps={{
+              style: {
+                color: fontColor,
+              },
+            }}
           />
-          <TextField label="Description" value={description} onChange={e => setDescription(e.target.value)} />
+          <TextField
+            label="Description"
+            value={description}
+            onChange={e => setDescription(e.target.value)}
+            inputProps={{
+              style: {
+                color: fontColor,
+              },
+            }}
+          />
+          <FormControl>
+            <InputLabel
+              style={{
+                color: fontColor,
+              }}
+            >
+              background
+            </InputLabel>
+            <Select
+              style={{ background: backgroundColor }}
+              value={backgroundColor}
+              onChange={e => setBackgroundColor(e.target.value as string)}
+            >
+              {colors.map(color => (
+                <MenuItem value={color} style={{ background: color }}></MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl>
+            <InputLabel
+              style={{
+                color: fontColor,
+              }}
+            >
+              font
+            </InputLabel>
+            <Select
+              style={{ background: fontColor }}
+              value={fontColor}
+              onChange={e => setFontColor(e.target.value as string)}
+            >
+              {colors.map(color => (
+                <MenuItem value={color} style={{ background: color }}></MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </section>
         <footer>
           <Button
             onClick={() => {
               setTitleErrorMessage('');
               handleClose();
+            }}
+            style={{
+              color: fontColor,
             }}
           >
             Cancel
@@ -52,7 +135,9 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
             onClick={() => {
               if (title) {
                 dispatch(
-                  todo ? editTodo({ ...todo, title, description }) : addTodo({ id: Date.now(), title, description }),
+                  todo
+                    ? editTodo({ ...todo, title, description, bgcolor: backgroundColor, color: fontColor })
+                    : addTodo({ id: Date.now(), title, description, bgcolor: backgroundColor, color: fontColor }),
                 );
                 setTitle('');
                 setDescription('');
@@ -60,6 +145,9 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
               } else {
                 setTitleErrorMessage('Title is required.');
               }
+            }}
+            style={{
+              color: fontColor,
             }}
           >
             Save

@@ -20,14 +20,43 @@ export default function Todo(props: TodoProps) {
   const dispatch = useDispatch();
 
   return (
-    <ExpansionPanel expanded={descriptionVisible} onChange={() => toggleDescription(!descriptionVisible)}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+    <ExpansionPanel
+      style={{
+        background: todo.bgcolor,
+        color: todo.color,
+      }}
+      expanded={descriptionVisible}
+      onChange={() => todo.description && toggleDescription(!descriptionVisible)}
+    >
+      <ExpansionPanelSummary
+        expandIcon={
+          todo.description && (
+            <ExpandMoreIcon
+              style={{
+                color: todo.color,
+              }}
+            />
+          )
+        }
+      >
         <section>
           <header>{todo.title}</header>
-          <Button size="small" onClick={edit}>
+          <Button
+            style={{
+              color: todo.color,
+            }}
+            size="small"
+            onClick={edit}
+          >
             edit
           </Button>
-          <Button size="small" onClick={() => dispatch(removeTodo(todo.id))}>
+          <Button
+            style={{
+              color: todo.color,
+            }}
+            size="small"
+            onClick={() => dispatch(removeTodo(todo.id))}
+          >
             remove
           </Button>
         </section>
