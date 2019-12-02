@@ -1,10 +1,8 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Button from '@material-ui/core/Button';
+import React, { useState } from 'react';
+import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { Todo as TodoType } from './types';
-import { CardHeader } from '@material-ui/core';
 import './todo.scss';
 import { useDispatch } from 'react-redux';
 import { removeTodo } from './actions';
@@ -17,24 +15,24 @@ interface TodoProps {
 export default function Todo(props: TodoProps) {
   const { todo, edit } = props;
 
+  const [descriptionVisible, toggleDescription] = useState(false);
+
   const dispatch = useDispatch();
 
   return (
-    <Card>
-      <CardHeader
-        title={todo.title}
-        action={
-          <>
-            <Button size="small" onClick={edit}>
-              edit
-            </Button>
-            <Button size="small" onClick={() => dispatch(removeTodo(todo.id))}>
-              remove
-            </Button>
-          </>
-        }
-      />
-      <CardContent>{todo.description}</CardContent>
-    </Card>
+    <ExpansionPanel expanded={descriptionVisible} onChange={() => toggleDescription(!descriptionVisible)}>
+      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+        <section>
+          <header>{todo.title}</header>
+          <Button size="small" onClick={edit}>
+            edit
+          </Button>
+          <Button size="small" onClick={() => dispatch(removeTodo(todo.id))}>
+            remove
+          </Button>
+        </section>
+      </ExpansionPanelSummary>
+      <ExpansionPanelDetails>{todo.description}</ExpansionPanelDetails>
+    </ExpansionPanel>
   );
 }

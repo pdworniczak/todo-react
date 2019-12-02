@@ -14,10 +14,12 @@ interface AddEditProps {
 export default function TodoEditor({ handleClose, context: { open, todo } }: AddEditProps) {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
+  const [titleErrorMessage, setTitleErrorMessage] = useState<string>('');
 
   useEffect(() => {
     setTitle((todo && todo.title) || '');
     setDescription((todo && todo.description) || '');
+    setTitleErrorMessage('');
   }, [todo]);
 
   const dispatch = useDispatch();
@@ -27,19 +29,37 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
       <article className="todo-modal__editor">
         <header>add/edit todo</header>
         <section>
-          <TextField label="Title" value={title} onChange={e => setTitle(e.target.value)} />
+          <TextField
+            required
+            label="Title"
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            error={!!titleErrorMessage}
+            helperText={titleErrorMessage}
+          />
           <TextField label="Description" value={description} onChange={e => setDescription(e.target.value)} />
         </section>
         <footer>
-          <Button onClick={() => handleClose()}>Cancel</Button>
           <Button
             onClick={() => {
-              dispatch(
-                todo ? editTodo({ ...todo, title, description }) : addTodo({ id: Date.now(), title, description }),
-              );
-              setTitle('');
-              setDescription('');
+              setTitleErrorMessage('');
               handleClose();
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              if (title) {
+                dispatch(
+                  todo ? editTodo({ ...todo, title, description }) : addTodo({ id: Date.now(), title, description }),
+                );
+                setTitle('');
+                setDescription('');
+                handleClose();
+              } else {
+                setTitleErrorMessage('Title is required.');
+              }
             }}
           >
             Save
