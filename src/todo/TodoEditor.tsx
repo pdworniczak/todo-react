@@ -52,16 +52,16 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
   const dispatch = useDispatch();
 
   return (
-    <Modal className="todo-modal__container" open={open} onClose={handleClose}>
+    <Modal className="todo-modal" open={open} onClose={handleClose}>
       <article
-        className="todo-modal__editor"
+        className="todo-modal__container"
         style={{
           background: backgroundColor,
           color: fontColor,
         }}
       >
         <header>{`${todo ? 'Edit' : 'Add'} todo`}</header>
-        <section>
+        <section className="todo-modal__content">
           <TextField
             required
             label="Title"
@@ -78,6 +78,7 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
           <TextField
             label="Description"
             value={description}
+            multiline
             onChange={e => setDescription(e.target.value)}
             inputProps={{
               style: {
@@ -85,14 +86,14 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
               },
             }}
           />
-          <FormControl>
-            <InputLabel
+          <div className="todo-modal__color-picker">
+            <h6
               style={{
                 color: fontColor,
               }}
             >
-              background
-            </InputLabel>
+              Color
+            </h6>
             <Select
               style={{ background: backgroundColor }}
               value={backgroundColor}
@@ -102,15 +103,15 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
                 <MenuItem key={index} value={color} style={{ background: color }}></MenuItem>
               ))}
             </Select>
-          </FormControl>
-          <FormControl>
-            <InputLabel
+          </div>
+          <div className="todo-modal__color-picker">
+            <h6
               style={{
                 color: fontColor,
               }}
             >
-              font
-            </InputLabel>
+              Font
+            </h6>
             <Select
               style={{ background: fontColor }}
               value={fontColor}
@@ -120,10 +121,11 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
                 <MenuItem key={index} value={color} style={{ background: color }}></MenuItem>
               ))}
             </Select>
-          </FormControl>
+          </div>
         </section>
-        <footer>
+        <footer className="todo-modal__footer">
           <Button
+            variant="outlined"
             onClick={() => {
               setTitleErrorMessage('');
               handleClose();
@@ -135,6 +137,7 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
             Cancel
           </Button>
           <Button
+            variant="outlined"
             onClick={() => {
               if (title) {
                 dispatch(

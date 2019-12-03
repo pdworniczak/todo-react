@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button, Fab } from '@material-ui/core';
+import React, { useState, useEffect } from 'react';
+import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Fab } from '@material-ui/core';
 import { ExpandMore, ArrowDropUp, ArrowDropDown, Edit, Delete } from '@material-ui/icons';
 
 import { Todo as TodoType } from './types';
@@ -14,12 +14,14 @@ interface TodoProps {
 
 export default function Todo(props: TodoProps) {
   const { todo, edit } = props;
-
   const [descriptionVisible, toggleDescription] = useState(false);
-
   const dispatch = useDispatch();
 
-  return (
+  useEffect(() => {
+    toggleDescription(false);
+  }, [todo]);
+
+  return (  
     <ExpansionPanel
       style={{
         background: todo.bgcolor,
@@ -40,7 +42,9 @@ export default function Todo(props: TodoProps) {
         }
       >
         <section className="todo__header">
-          <header className="todo__title">{todo.title}</header>
+          <header className="todo__title">
+            <h4>{todo.title}</h4>
+          </header>
           <div className="todo__buttons">
             <Fab
               size="small"

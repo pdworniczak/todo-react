@@ -36,10 +36,21 @@ $modal-background: #fff;
     display: flex;
     align-items: center;
     width: 100%;
+
+    @media screen and (max-width: 500px) {
+      flex-direction: column;
+    }
   }
 
   &__title {
     flex: 1;
+    text-align: center;
+    overflow: hidden;
+
+    h4 {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   &__buttons {
@@ -50,16 +61,37 @@ $modal-background: #fff;
 }
 
 .todo-modal {
-  &__container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  &__editor {
+  &__container {
     padding: 2em;
     background: $modal-background;
     border: 0;
-    border-radius: 1em;
+    border-radius: 0.5em;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__color-picker {
+    display: flex;
+    align-items: baseline;
+
+    & > * {
+      flex: 1;
+      margin: 0.3em;
+    }
+  }
+
+  &__footer {
+    justify-content: flex-end;
+    display: flex;
+    & > * {
+      margin: 0.2em;
+    }
   }
 }
