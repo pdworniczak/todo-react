@@ -31,19 +31,22 @@ const colors = [
   '#808000',
 ];
 
+const DEFAULT_BG_COLOR = '#FFFFFF';
+const DEFAULT_FONT_COLOR = '#000000';
+
 export default function TodoEditor({ handleClose, context: { open, todo } }: AddEditProps) {
   const [title, setTitle] = useState<string>('');
   const [description, setDescription] = useState<string>('');
-  const [backgroundColor, setBackgroundColor] = useState<string>('#FFF');
-  const [fontColor, setFontColor] = useState<string>('#000');
+  const [backgroundColor, setBackgroundColor] = useState<string>(DEFAULT_BG_COLOR);
+  const [fontColor, setFontColor] = useState<string>(DEFAULT_FONT_COLOR);
   const [titleErrorMessage, setTitleErrorMessage] = useState<string>('');
 
   useEffect(() => {
     setTitle((todo && todo.title) || '');
     setDescription((todo && todo.description) || '');
     setTitleErrorMessage('');
-    setBackgroundColor((todo && todo.bgcolor) || '#FFF');
-    setFontColor((todo && todo.color) || '#000');
+    setBackgroundColor((todo && todo.bgcolor) || DEFAULT_BG_COLOR);
+    setFontColor((todo && todo.color) || DEFAULT_FONT_COLOR);
   }, [todo]);
 
   const dispatch = useDispatch();
@@ -95,8 +98,8 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
               value={backgroundColor}
               onChange={e => setBackgroundColor(e.target.value as string)}
             >
-              {colors.map(color => (
-                <MenuItem value={color} style={{ background: color }}></MenuItem>
+              {colors.map((color, index) => (
+                <MenuItem key={index} value={color} style={{ background: color }}></MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -113,8 +116,8 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
               value={fontColor}
               onChange={e => setFontColor(e.target.value as string)}
             >
-              {colors.map(color => (
-                <MenuItem value={color} style={{ background: color }}></MenuItem>
+              {colors.map((color, index) => (
+                <MenuItem key={index} value={color} style={{ background: color }}></MenuItem>
               ))}
             </Select>
           </FormControl>
@@ -141,6 +144,9 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
                 );
                 setTitle('');
                 setDescription('');
+                setBackgroundColor(DEFAULT_BG_COLOR);
+                setFontColor(DEFAULT_FONT_COLOR);
+                setTitleErrorMessage('');
                 handleClose();
               } else {
                 setTitleErrorMessage('Title is required.');

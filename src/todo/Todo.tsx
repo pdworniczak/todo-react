@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button } from '@material-ui/core';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button, Fab } from '@material-ui/core';
+import { ExpandMore, ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
 
 import { Todo as TodoType } from './types';
 import './todo.scss';
 import { useDispatch } from 'react-redux';
-import { removeTodo } from './actions';
+import { removeTodo, upTodo, downTodo } from './actions';
 
 interface TodoProps {
   todo: TodoType;
@@ -31,7 +31,7 @@ export default function Todo(props: TodoProps) {
       <ExpansionPanelSummary
         expandIcon={
           todo.description && (
-            <ExpandMoreIcon
+            <ExpandMore
               style={{
                 color: todo.color,
               }}
@@ -46,7 +46,10 @@ export default function Todo(props: TodoProps) {
               color: todo.color,
             }}
             size="small"
-            onClick={edit}
+            onClick={e => {
+              e.stopPropagation();
+              edit();
+            }}
           >
             edit
           </Button>
@@ -59,6 +62,32 @@ export default function Todo(props: TodoProps) {
           >
             remove
           </Button>
+          <Fab
+            size="small"
+            onClick={e => {
+              e.stopPropagation();
+              dispatch(upTodo(todo.id));
+            }}
+            style={{
+              background: todo.bgcolor,
+              color: todo.color,
+            }}
+          >
+            <ArrowDropUp />
+          </Fab>
+          <Fab
+            size="small"
+            onClick={e => {
+              e.stopPropagation();
+              dispatch(downTodo(todo.id));
+            }}
+            style={{
+              background: todo.bgcolor,
+              color: todo.color,
+            }}
+          >
+            <ArrowDropDown />
+          </Fab>
         </section>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>{todo.description}</ExpansionPanelDetails>
