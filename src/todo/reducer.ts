@@ -1,7 +1,7 @@
 import { Todo, TodoActionTypes, TodoState, TODO_ADD, TODO_EDIT, TODO_REMOVE, TODO_DOWN, TODO_UP } from './types';
 
 const initialState = {
-  todos: [{ id: 0, title: 'redux title', description: 'im inside redux' }] as Todo[],
+  todos: [] as Todo[],
 };
 
 export default (state = initialState, action: TodoActionTypes): TodoState => {

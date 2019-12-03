@@ -21,8 +21,9 @@ export default function Todo(props: TodoProps) {
     toggleDescription(false);
   }, [todo]);
 
-  return (  
+  return (
     <ExpansionPanel
+      className="todo"
       style={{
         background: todo.bgcolor,
         color: todo.color,

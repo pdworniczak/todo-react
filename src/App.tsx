@@ -1,13 +1,13 @@
-import React from "react";
-import { Provider } from "react-redux";
+import React from 'react';
+import { Provider } from 'react-redux';
 
-import TodoList from "./todo/TodoList";
-import store from "./store";
+import TodoList from './todo/TodoList';
+import store from './store';
 
 const App: React.FC = () => {
   return (
     <article className="App">
-      <Provider store={store}>
+      <Provider store={store()}>
         <TodoList />
       </Provider>
     </article>
