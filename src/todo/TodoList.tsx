@@ -26,7 +26,7 @@ export default function TodoList() {
           </Button>
         </header>
         {todos.map((todo, index) => (
-          <Todo key={index} todo={todo} edit={() => setTodoEditor({ open: true, todo })} />
+          <Todo key={todo.id} todo={todo} edit={() => setTodoEditor({ open: true, todo })} />
         ))}
       </article>
       <TodoEditor context={todoEditor} handleClose={() => setTodoEditor({ open: false })} />
