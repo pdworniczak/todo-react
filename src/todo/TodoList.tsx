@@ -13,11 +13,18 @@ export default function TodoList() {
 
   return (
     <>
-      <article className="todo">
-        <header className="todo__header">TODO List</header>
-        <Button size="small" onClick={() => setTodoEditor({ open: true })}>
-          add
-        </Button>
+      <article className="todo-list">
+        <header className="todo-list__header">
+          <h1>TODO List</h1>
+          <Button
+            className="todo-list__button"
+            size="small"
+            variant="outlined"
+            onClick={() => setTodoEditor({ open: true })}
+          >
+            add
+          </Button>
+        </header>
         {todos.map((todo, index) => (
           <Todo key={index} todo={todo} edit={() => setTodoEditor({ open: true, todo })} />
         ))}

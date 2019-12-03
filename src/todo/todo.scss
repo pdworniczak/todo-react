@@ -1,16 +1,51 @@
 $modal-background: #fff;
 
-.App {
+#root {
   display: flex;
   justify-content: center;
 }
 
-.todo {
-  display: felx;
+.App {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
   max-width: 800px;
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
 
   &__header {
-    margin: 2em;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 0.5em;
+    padding: 0.5em;
+  }
+
+  &__button {
+    width: 3em;
+    align-self: flex-end;
+  }
+}
+
+.todo {
+  &__header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  &__title {
+    flex: 1;
+  }
+
+  &__buttons {
+    button {
+      margin: 0.2em;
+    }
   }
 }
 
@@ -24,6 +59,7 @@ $modal-background: #fff;
   &__editor {
     padding: 2em;
     background: $modal-background;
+    border: 0;
     border-radius: 1em;
   }
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails, Button, Fab } from '@material-ui/core';
-import { ExpandMore, ArrowDropUp, ArrowDropDown } from '@material-ui/icons';
+import { ExpandMore, ArrowDropUp, ArrowDropDown, Edit, Delete } from '@material-ui/icons';
 
 import { Todo as TodoType } from './types';
 import './todo.scss';
@@ -39,55 +39,59 @@ export default function Todo(props: TodoProps) {
           )
         }
       >
-        <section>
-          <header>{todo.title}</header>
-          <Button
-            style={{
-              color: todo.color,
-            }}
-            size="small"
-            onClick={e => {
-              e.stopPropagation();
-              edit();
-            }}
-          >
-            edit
-          </Button>
-          <Button
-            style={{
-              color: todo.color,
-            }}
-            size="small"
-            onClick={() => dispatch(removeTodo(todo.id))}
-          >
-            remove
-          </Button>
-          <Fab
-            size="small"
-            onClick={e => {
-              e.stopPropagation();
-              dispatch(upTodo(todo.id));
-            }}
-            style={{
-              background: todo.bgcolor,
-              color: todo.color,
-            }}
-          >
-            <ArrowDropUp />
-          </Fab>
-          <Fab
-            size="small"
-            onClick={e => {
-              e.stopPropagation();
-              dispatch(downTodo(todo.id));
-            }}
-            style={{
-              background: todo.bgcolor,
-              color: todo.color,
-            }}
-          >
-            <ArrowDropDown />
-          </Fab>
+        <section className="todo__header">
+          <header className="todo__title">{todo.title}</header>
+          <div className="todo__buttons">
+            <Fab
+              size="small"
+              onClick={e => {
+                e.stopPropagation();
+                edit();
+              }}
+              style={{
+                background: todo.bgcolor,
+                color: todo.color,
+              }}
+            >
+              <Edit style={{ fontSize: '.8em' }} />
+            </Fab>
+            <Fab
+              size="small"
+              onClick={() => dispatch(removeTodo(todo.id))}
+              style={{
+                background: todo.bgcolor,
+                color: todo.color,
+              }}
+            >
+              <Delete style={{ fontSize: '.8em' }} />
+            </Fab>
+            <Fab
+              size="small"
+              onClick={e => {
+                e.stopPropagation();
+                dispatch(upTodo(todo.id));
+              }}
+              style={{
+                background: todo.bgcolor,
+                color: todo.color,
+              }}
+            >
+              <ArrowDropUp />
+            </Fab>
+            <Fab
+              size="small"
+              onClick={e => {
+                e.stopPropagation();
+                dispatch(downTodo(todo.id));
+              }}
+              style={{
+                background: todo.bgcolor,
+                color: todo.color,
+              }}
+            >
+              <ArrowDropDown />
+            </Fab>
+          </div>
         </section>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>{todo.description}</ExpansionPanelDetails>

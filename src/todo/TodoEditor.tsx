@@ -60,7 +60,7 @@ export default function TodoEditor({ handleClose, context: { open, todo } }: Add
           color: fontColor,
         }}
       >
-        <header>add/edit todo</header>
+        <header>{`${todo ? 'Edit' : 'Add'} todo`}</header>
         <section>
           <TextField
             required
