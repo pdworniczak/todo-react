@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Modal, TextField, Button, Select, MenuItem, FormControl, InputLabel } from '@material-ui/core';
+import { Modal, TextField, Button, Select, MenuItem } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 import './todo.scss';
